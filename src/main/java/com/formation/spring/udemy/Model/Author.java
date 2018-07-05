@@ -1,9 +1,6 @@
 package com.formation.spring.udemy.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@Builder
 @Entity
 public class Author {
   @Id
@@ -29,9 +27,13 @@ public class Author {
   private int version;
   private String firstname;
   private String lastname;
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "author_book" ,
               joinColumns = @JoinColumn(name = "author_id"),
               inverseJoinColumns = @JoinColumn(name = "book_id"))
-  private Set<Book> books = new HashSet<>();
+  private Set<Book> books;
+
+  {
+    books = new HashSet<>();
+  }
 }

@@ -1,9 +1,6 @@
 package com.formation.spring.udemy.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,8 +14,8 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@AllArgsConstructor()
+@Builder
 @Entity
 public class Book {
 
