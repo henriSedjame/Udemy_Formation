@@ -11,4 +11,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
  */
 public interface AuthorRepository extends JpaRepository<Author, Long> , QuerydslPredicateExecutor<Author> {
 
+
 }

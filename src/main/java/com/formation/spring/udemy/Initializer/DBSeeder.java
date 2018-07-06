@@ -3,10 +3,11 @@ package com.formation.spring.udemy.Initializer;
 import com.formation.spring.udemy.Model.Author;
 import com.formation.spring.udemy.Model.Book;
 import com.formation.spring.udemy.Model.Publisher;
-import com.formation.spring.udemy.Model.QAuthor;
 import com.formation.spring.udemy.Repository.AuthorRepository;
 import com.formation.spring.udemy.Repository.BookRepository;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.formation.spring.udemy.Utils.PojoQueryingPredicates.AuthorPredicator;
+import com.querydsl.core.types.Predicate;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -23,14 +24,17 @@ import java.util.List;
  */
 
 @Component
+@Log4j2
 public class DBSeeder implements ApplicationListener<ContextRefreshedEvent> {
 
   private AuthorRepository authorRepository;
   private BookRepository bookRepository;
+    private AuthorPredicator authorPredicator;
 
-  public DBSeeder(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public DBSeeder(AuthorRepository authorRepository, BookRepository bookRepository, AuthorPredicator authorPredicator) {
     this.authorRepository = authorRepository;
     this.bookRepository = bookRepository;
+        this.authorPredicator = authorPredicator;
   }
 
   @Override
@@ -107,15 +111,13 @@ public class DBSeeder implements ApplicationListener<ContextRefreshedEvent> {
     author2.getBooks().add(book3);
 
     Assert.isTrue(author2.getBooks().size() == 2, "Manque des livres pour author2");
+        Assert.notNull(authorRepository, "authorRepository est nul");
+        Assert.notNull(authorPredicator, "authorPredicator est nul");
 
     this.authorRepository.saveAll(Arrays.asList(author1, author2));
-
-        QAuthor author = new QAuthor("author");
-        BooleanExpression filter = author.lastname
-                .eq("Sedjame");
-        List<Author> authors = (List<Author>) this.authorRepository.findAll(filter);
-
-        Assert.isTrue(authors.size() == 1, "Bad answer");
+        Predicate predicate = this.authorPredicator.named("Sedjame");
+        List<Author> authors = (List<Author>) this.authorRepository.findAll(predicate);
+        Assert.isTrue(authors.size() == 1, "Erreur dans le findAll");
 
   }
 }
