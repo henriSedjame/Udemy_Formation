@@ -1,6 +1,9 @@
 package com.formation.spring.udemy.Model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,7 +28,9 @@ public class Book {
   @Version
   private int version;
   private String isbn;
-  private String publisher;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "publisher_id")
+  private Publisher publisher;
   @ManyToMany(mappedBy = "books")
   private Set<Author> authors;
 

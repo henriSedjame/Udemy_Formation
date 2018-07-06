@@ -2,8 +2,11 @@ package com.formation.spring.udemy.Initializer;
 
 import com.formation.spring.udemy.Model.Author;
 import com.formation.spring.udemy.Model.Book;
+import com.formation.spring.udemy.Model.Publisher;
+import com.formation.spring.udemy.Model.QAuthor;
 import com.formation.spring.udemy.Repository.AuthorRepository;
 import com.formation.spring.udemy.Repository.BookRepository;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,7 @@ import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @Project udemy
@@ -34,21 +38,39 @@ public class DBSeeder implements ApplicationListener<ContextRefreshedEvent> {
         this.initPojo();
   }
 
-  public void initPojo(){
+    private void initPojo() {
+
+        Publisher pub1 = Publisher.builder()
+                .name("Amazon")
+                .adress(null)
+                .build();
+
+        Publisher pub2 = Publisher.builder()
+                .name("Ocean")
+                .adress(null)
+                .build();
+
+        Publisher pub3 = Publisher.builder()
+                .name("L'harmattan")
+                .adress(null)
+                .build();
+
+        Publisher[] pubs = {pub1, pub2, pub3};
+        Assert.noNullElements(pubs, "L'un des publishers est null");
 
     Book book1 = Book.builder()
                     .isbn("123")
-                    .publisher("Amazon")
+            .publisher(pub1)
                     .build();
 
     Book book2 = Book.builder()
                     .isbn("654")
-                    .publisher("Ocean")
+            .publisher(pub2)
                     .build();
 
     Book book3 = Book.builder()
                     .isbn("759")
-                    .publisher("L'harmattan")
+            .publisher(pub3)
                     .build();
 
 
@@ -87,5 +109,13 @@ public class DBSeeder implements ApplicationListener<ContextRefreshedEvent> {
     Assert.isTrue(author2.getBooks().size() == 2, "Manque des livres pour author2");
 
     this.authorRepository.saveAll(Arrays.asList(author1, author2));
+
+        QAuthor author = new QAuthor("author");
+        BooleanExpression filter = author.lastname
+                .eq("Sedjame");
+        List<Author> authors = (List<Author>) this.authorRepository.findAll(filter);
+
+        Assert.isTrue(authors.size() == 1, "Bad answer");
+
   }
 }
