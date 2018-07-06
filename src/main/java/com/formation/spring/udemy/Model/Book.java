@@ -27,5 +27,9 @@ public class Book {
   private String isbn;
   private String publisher;
   @ManyToMany(mappedBy = "books")
-  private Set<Author> authors = new HashSet<>();
+  private Set<Author> authors;
+
+  {
+    authors = new HashSet<>();
+  }
 }
