@@ -13,17 +13,17 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Publisher {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Version
-    private int version;
-    private String name;
-    private String adress;
-    @OneToMany(mappedBy = "publisher")
-    private Set<Book> publishedBooks;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  @Version
+  private int version;
+  private String name;
+  private String adress;
+  @OneToMany(mappedBy = "publisher")
+  private Set<Book> publishedBooks;
 
-    {
-        publishedBooks = new HashSet<>();
-    }
+  {
+    publishedBooks = new HashSet<>();
+  }
 }

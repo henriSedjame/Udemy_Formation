@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorPredicatorImpl extends PojoQueryingPredicator<QAuthor> implements AuthorPredicator {
 
-    public AuthorPredicatorImpl() {
-        super(Author.class);
-    }
+  public AuthorPredicatorImpl() {
+    super(Author.class);
+  }
 
-    public Predicate named(String name) {
-        return getQClasse().lastname.eq(name);
-    }
+  public Predicate named(String name) {
+    return getQClasse().lastname.eq(name);
+  }
 }

@@ -2,16 +2,16 @@ package com.formation.spring.udemy.Utils.PojoQueryingPredicates;
 
 import com.formation.spring.udemy.Utils.QPojoUtils.PojoUtils;
 
-public class PojoQueryingPredicator<T> {
+public abstract class PojoQueryingPredicator<T> {
 
-    private Class className;
+  private Class className;
 
-    public PojoQueryingPredicator(Class className) {
-        this.className = className;
-    }
+  public PojoQueryingPredicator(Class className) {
+    this.className = className;
+  }
 
-    public T getQClasse() {
-        return (T) PojoUtils.getQPojo(className);
-    }
+  public T getQClasse() {
+    return (T) PojoUtils.getQPojo(className);
+  }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
  * @Author Henri Joel SEDJAME
  * @Date 05/07/2018
  */
-public interface BookRepository extends JpaRepository<Book, Long> , QuerydslPredicateExecutor<Book> {
+public interface BookRepository extends JpaRepository<Book, Long>, QuerydslPredicateExecutor<Book> {
 
 
 }

@@ -5,5 +5,5 @@ import com.querydsl.core.types.Predicate;
 
 
 public interface AuthorPredicator {
-    Predicate named(String name);
+  Predicate named(String name);
 }
